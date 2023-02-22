@@ -1,19 +1,21 @@
-import { useState } from 'react'
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client'
 import "bootswatch/dist/quartz/bootstrap.min.css";
 import './components/Navbar/style.css';
 import { setContext } from '@apollo/client/link/context';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import CreateProfile from './pages/CreateProfile';
+import CreateProfile from './pages/HandleUser/CreateProfile';
 import UserPage from './pages/ProfilePage';
-import Questionaire from './pages/Questionaire';
+import MyPage from './pages/myProfile';
+import DeletedAcctMessage from './components/DeletedAcctMessage';
+import MatchPage from './pages/Matches';
+import Questionaire from './pages/HandleUser/Questionaire';
 import Footer from './components/Footer';
-import Login from './pages/Login';
+import Login from './pages/HandleUser/Login';
 import UserList from './pages/PotentialMatches';
 import Header from './components/Header';
 import lgLogo from './Duet-Logo-lg.png';
 import PhotoQuestion from './pages/PhotoQuestion/index';
-import Home from './pages/Home/Home';
+import Home from './pages/Home';
 
 const httpLink = createHttpLink({ uri: '/graphql' });
 
@@ -37,50 +39,64 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <div className="container-fluid">
+        <div className="appCont container-fluid">
         <Header />
-        <Routes>
-        <Route
-            path='/'
-            element={<Home />}
-          />
+        <div className='min-vh-100'>
+          <Routes>
           <Route
-            path='/duet'
-            element={<Home />}
-          />
-          <Route
-            path='/createprofile'
-            element={<CreateProfile />}
-          />
-          <Route
-            path='/quest'
-            element={<Questionaire />}
-          />
-          <Route
-            path='/photo'
-            element={<PhotoQuestion />}
-          />
-          <Route
-            path='/login'
-            element={<Login />}
-          />
-          <Route
-            path='/feed'
-            element={<UserList />}
-          />
-          <Route
-            path='/users/:userId'
-            element={<UserPage />}
-          />
-          <Route
-            path='*'
-            element={(<div>
-            <h1 className='display-2'>Wrong page!</h1>
-            <img src ={lgLogo} alt='Duet Logo'/>
-            </div>
-            )}
-          />
-        </Routes>
+              path='/'
+              element={<Home />}
+            />
+            <Route
+              path='/duet'
+              element={<Home />}
+            />
+            <Route
+              path='/createprofile'
+              element={<CreateProfile />}
+            />
+            <Route
+              path='/quest'
+              element={<Questionaire />}
+            />
+            <Route
+              path='/photo'
+              element={<PhotoQuestion />}
+            />
+            <Route
+              path='/login'
+              element={<Login />}
+            />
+            <Route
+              path='/feed'
+              element={<UserList />}
+            />
+            <Route
+              path='/users/:userId'
+              element={<UserPage />}
+            />
+            <Route
+              path='/me'
+              element={<MyPage />}
+            />
+            <Route
+              path='/matches'
+              element={<MatchPage />}
+            />
+            <Route
+              path='/accountDeleted'
+              element={<DeletedAcctMessage />}
+            />
+            <Route
+              path='*'
+              element={(<div>
+              <h1 className='display-2'>Wrong page!</h1>
+              <img src ={lgLogo} alt='Duet Logo'/>
+              </div>
+              )}
+            />
+          </Routes>
+        </div>
         <Footer />
         </div>
       </Router>

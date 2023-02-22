@@ -26,13 +26,11 @@ export const QUERY_USER = gql`
       six
       seven
       eight
-      nine
-      ten
-      eleven
-      twelve
     }
     state
     username
+    firstName
+    lastName
   }
 }
 `;
@@ -48,6 +46,8 @@ export const QUERY_USERS = gql`
     interestedIn
     password
     photo
+    firstName
+    lastName
     playlistAnswers {
       one
       two
@@ -62,13 +62,9 @@ export const QUERY_USERS = gql`
       three
       four
       five
-    six
+      six
       seven
       eight
-      nine
-      ten
-      eleven
-      twelve
     }
   }
 }
@@ -85,8 +81,11 @@ export const QUERY_ME = gql`
     interestedIn
     password
     pronouns
+    photo
     state
     username
+    firstName
+    lastName
     playlistAnswers {
       one
       two
@@ -98,13 +97,9 @@ export const QUERY_ME = gql`
       three
       four
       five
-    six
+      six
       seven
       eight
-      nine
-      ten
-      eleven
-      twelve
     }
   }
 }
@@ -135,6 +130,20 @@ export const QUERY_MATCHES = gql`
 }
 `;
 
-export const searchDeezerApi = (query) => {
-  return fetch(`https://api.deezer.com/search?q=track:"${query}"`);
-};
+export const SEARCH_DEEZER = gql`
+  query searchDeezer($song: String!) {
+  searchDeezer(song: $song) {
+    id
+    title
+    preview
+    artist {
+      id
+      name
+    }
+    album {
+      id
+      cover_medium
+    }
+  }
+}
+`;

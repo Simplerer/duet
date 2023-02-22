@@ -3,6 +3,8 @@ const { gql } = require('apollo-server-express');
 const typeDefs = gql`
   type User {
   _id: ID
+  firstName: String!
+  lastName: String!
   username: String!
   email: String!
   password: String!
@@ -32,10 +34,6 @@ const typeDefs = gql`
     six: String!
     seven: String!
     eight: String!
-    nine: String!
-    ten: String!
-    eleven: String!
-    twelve: String!
   }
 
   type PlaylistAnswers {
@@ -63,6 +61,24 @@ const typeDefs = gql`
     user: User
   }
 
+  type Artist {
+    id: ID
+    name: String
+  }
+
+  type Album {
+    id: ID
+    cover_medium: String
+  }
+
+  type Deezer {
+    id: ID
+    title: String
+    preview: String
+    artist: Artist
+    album: Album
+  }
+
   input AnswerInput {
     artist: String!
     track: String!
@@ -78,10 +94,6 @@ const typeDefs = gql`
     six: String!
     seven: String!
     eight: String!
-    nine: String!
-    ten: String!
-    eleven: String!
-    twelve: String!
   }
 
   input PlaylistAnswersInput {
@@ -95,10 +107,13 @@ const typeDefs = gql`
     user(id: ID!): User
     me: User
     matches: [Match]
+    searchDeezer(song: String!): Deezer
   }
 
   type Mutation {
     addUser(
+      firstName: String!,
+      lastName: String!,
       email: String!, 
       username: String!, 
       password: String!,
@@ -109,6 +124,7 @@ const typeDefs = gql`
       gender: String,
       pronouns: String
       ): Auth
+    deleteUser: User
     updateAnswers(songAnswers: SongAnswersInput!): User
     updatePlaylist(playlistAnswers: PlaylistAnswersInput!): User
     updatePhoto(photo: String!): User
